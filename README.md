@@ -71,3 +71,6 @@ export default defineConfig([
   },
 ])
 ```
+## Instalación de TailWind
+
+[https://tailwindcss.com/docs/installation/using-vite](https://tailwindcss.com/docs/installation/using-vite)

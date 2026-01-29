@@ -1,15 +1,19 @@
 import { useState } from "react";
 
-const colors = {
+const colors= {
   red: "bg-red-500 animate-pulse",
   yellow: "bg-yellow-500 animate-pulse",
   green: "bg-green-500 animate-pulse",
 };
+
+// type TrafficLightColor = "red" | "yellow" | "green";
+type TrafficLightColor = keyof typeof colors;
+
 export const TrafficLight = () => {
   //Si quiero saber constantemente el estado de algo
-  const [light, setLight] = useState("red");
+  const [light, setLight] = useState<TrafficLightColor>("red");
 
-  const handleColorChange = (color: string) => {
+  const handleColorChange = (color: TrafficLightColor) => {
     setLight((prev) => {
         console.log(prev);
         return color;

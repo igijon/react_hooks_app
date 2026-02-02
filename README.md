@@ -79,3 +79,8 @@ export default defineConfig([
 ## Añadir Shadcn
 
 [https://ui.shadcn.com/docs/installation/vite](https://ui.shadcn.com/docs/installation/vite)
+
+## Aplicaciones para crear con IA UI
+
+[https://v0.app/](https://v0.app/)
+[https://lovable.dev/](https://lovable.dev/)

@@ -74,3 +74,8 @@ export default defineConfig([
 ## Instalación de TailWind
 
 [https://tailwindcss.com/docs/installation/using-vite](https://tailwindcss.com/docs/installation/using-vite)
+
+
+## Añadir Shadcn
+
+[https://ui.shadcn.com/docs/installation/vite](https://ui.shadcn.com/docs/installation/vite)

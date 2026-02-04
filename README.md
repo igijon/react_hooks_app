@@ -83,4 +83,10 @@ export default defineConfig([
 ## Aplicaciones para crear con IA UI
 
 [https://v0.app/](https://v0.app/)
+
 [https://lovable.dev/](https://lovable.dev/)
+
+## Esquemas de validación de objetos 
+
+[https://zod.dev/](https://zod.dev/)
+

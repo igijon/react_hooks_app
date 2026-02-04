@@ -16,6 +16,15 @@ export type TaskAction =
   | { type: "TOGGLE_TODO"; payload: number }
   | { type: "DELETE_TODO"; payload: number };
 
+export const getTasksInitialState = (): TaskState => {
+    return {
+        todos: [],
+        length: 0,
+        completed: 0,
+        pending: 0,
+    };
+};
+    
 //Un reducer es una función que devuelve siempre un estado nuevo.
 //Es una función pura que resuelve un nuevo estado basado en los argumentos
 //El patrón Reducer es agnóstico, no depende de React, se podría implementar en cualquier tecnología

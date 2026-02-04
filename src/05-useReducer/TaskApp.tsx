@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 import { Plus, Trash2, Check } from "lucide-react";
 
@@ -15,6 +15,10 @@ export const TasksApp = () => {
   //Cuando cambie el estado, React va a renderizar el componente de nuevo
   const [state, dispatch] = useReducer(taskReducer, getTasksInitialState());
 
+  useEffect(() => {
+    localStorage.setItem("tasksState", JSON.stringify(state)); //Crea la representación en string del estado
+  }, [state]);
+  
   const addTodo = () => {
     if (inputValue.length === 0) return;
     dispatch({ type: "ADD_TODO", payload: inputValue });

@@ -2,30 +2,31 @@
 // Es necesario componentes de Shadcn/ui
 // https://ui.shadcn.com/docs/installation/vite
 
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
-import { SkipForward, Play } from 'lucide-react';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { SkipForward, Play } from "lucide-react";
+import confetti from "canvas-confetti";
 
 const GAME_WORDS = [
-  'REACT',
-  'JAVASCRIPT',
-  'TYPESCRIPT',
-  'HTML',
-  'ANGULAR',
-  'SOLID',
-  'NODE',
-  'VUEJS',
-  'SVELTE',
-  'EXPRESS',
-  'MONGODB',
-  'POSTGRES',
-  'DOCKER',
-  'KUBERNETES',
-  'WEBPACK',
-  'VITE',
-  'TAILWIND',
+  "REACT",
+  "JAVASCRIPT",
+  "TYPESCRIPT",
+  "HTML",
+  "ANGULAR",
+  "SOLID",
+  "NODE",
+  "VUEJS",
+  "SVELTE",
+  "EXPRESS",
+  "MONGODB",
+  "POSTGRES",
+  "DOCKER",
+  "KUBERNETES",
+  "WEBPACK",
+  "VITE",
+  "TAILWIND",
 ];
 
 // Esta función mezcla el arreglo para que siempre sea aleatorio
@@ -34,11 +35,11 @@ const shuffleArray = (array: string[]) => {
 };
 
 // Esta función mezcla las letras de la palabra
-const scrambleWord = (word: string = '') => {
+const scrambleWord = (word: string = "") => {
   return word
-    .split('')
+    .split("")
     .sort(() => Math.random() - 0.5)
-    .join('');
+    .join("");
 };
 
 export const ScrambleWords = () => {
@@ -46,7 +47,7 @@ export const ScrambleWords = () => {
 
   const [currentWord, setCurrentWord] = useState(words[0]);
   const [scrambledWord, setScrambledWord] = useState(scrambleWord(currentWord));
-  const [guess, setGuess] = useState('');
+  const [guess, setGuess] = useState("");
   const [points, setPoints] = useState(0);
   const [errorCounter, setErrorCounter] = useState(0);
   const [maxAllowErrors, setMaxAllowErrors] = useState(3);
@@ -60,24 +61,54 @@ export const ScrambleWords = () => {
     // Previene el refresh de la página
     e.preventDefault();
     // Implementar lógica de juego
-    console.log('Intento de adivinanza:', guess, currentWord);
-
+    // console.log('Intento de adivinanza:', guess, currentWord);
+    if (guess === currentWord) {
+      const newWords = words.slice(1);
+      //Conffetti
+      confetti({
+        particleCount: 100,
+        spread: 120,
+        origin: { y: 0.6 },
+      });
+      setPoints((prev) => prev + 1);
+      setGuess("");
+      setWords(newWords);
+      setCurrentWord(newWords[0]);
+      setScrambledWord(scrambleWord(newWords[0]));
+      return;
+    }
+    setErrorCounter(errorCounter + 1);
+    setGuess("");
+    if (errorCounter + 1 >= maxAllowErrors) {
+      setIsGameOver(true);
+    }
   };
 
   const handleSkip = () => {
-    console.log('Palabra saltada');
-
-    
+    if (skipCounter >= maxSkips) return;
+    const updateWords = words.splice(1);
+    setSkipCounter(skipCounter + 1);
+    setWords(updateWords);
+    setScrambledWord(scrambleWord(updateWords[0]));
+    setGuess("");
   };
 
   const handlePlayAgain = () => {
-    console.log('Jugar de nuevo');
-    
+
+    const newArray = shuffleArray(GAME_WORDS);
+
+    setPoints(0);
+    setErrorCounter(0);
+    setGuess('');
+    setWords(newArray);
+    setCurrentWord(newArray[0]);
+    setIsGameOver(false);
+    setSkipCounter(0);
+    setScrambledWord(scrambleWord(newArray[0]));
   };
 
   //! Si ya no hay palabras para jugar, se muestra el mensaje de fin de juego
   if (words.length === 0) {
-    
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
         <div className="w-full max-w-md mx-auto">
@@ -124,13 +155,13 @@ export const ScrambleWords = () => {
               </h2>
 
               <div className="flex justify-center gap-2 mb-6">
-                {scrambledWord.split('').map((letter, index) => (
+                {scrambledWord.split("").map((letter, index) => (
                   <div
                     key={index}
                     className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg transform hover:scale-105 transition-transform duration-200"
                     style={{
                       animationDelay: `${index * 0.1}s`,
-                      animation: 'fadeInUp 0.6s ease-out forwards',
+                      animation: "fadeInUp 0.6s ease-out forwards",
                     }}
                   >
                     {letter}
@@ -217,7 +248,7 @@ export const ScrambleWords = () => {
             Desafíate con palabras desordenadas!
             <br />
             <br />
-            {words.join(', ')}
+            {words.join(", ")}
           </p>
         </div>
       </div>

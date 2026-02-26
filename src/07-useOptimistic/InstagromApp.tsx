@@ -1,4 +1,5 @@
 import { useOptimistic, useState, useTransition } from "react";
+import { toast, Toaster } from "sonner";
 
 interface Comment {
   id: number;
@@ -36,16 +37,31 @@ export const InstagromApp = () => {
         //Simular petición al servidor
       await new Promise((resolve) => setTimeout(resolve, 3000));
       console.log("Servidor respondió");
-      setComments((prev) => [
-        ...prev,
-        { id: new Date().getTime(), text: messageText },
-      ]);
+    //   setComments((prev) => [
+    //     ...prev,
+    //     { id: new Date().getTime(), text: messageText },
+    //   ]);
+    //!Este sería el código para revertir el proceso
+    setComments((prev) => prev);
+    toast('Error al enviar el comentario',
+        {
+            description: 'Inténtalo de nuevo más tarde',
+            duration: 10000,
+            position: 'top-right',
+            action: {
+                label: 'Cerrar',
+                onClick: () => toast.dismiss()  
+            }
+        }
+    )
     });
   };
 
   return (
+    
     <div className="bg-slate-700 h-screen flex flex-col items-center justify-center">
       {/* Post de ejemplo */}
+      <Toaster />
       <div className="flex flex-col items-center justify-center bg-gray-300 rounded-t-3xl p-4 w-[500px]">
         <img
           src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=500&h=500&fit=crop"

@@ -1,7 +1,8 @@
-import { StrictMode } from "react";
+import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { ClientInformation } from "./08-use-suspense/ClientInformation";
+import { getUserAction } from "./08-use-suspense/api/get-user.action";
 // import { ScrambleWords } from "./05-useReducer/ScrambleWords";
 // import { MemoHook } from "./06-memos/MemoHook";
 // import { MemoCounter } from "./06-memos/MemoCounter";
@@ -27,6 +28,14 @@ createRoot(document.getElementById("root")!).render(
     {/* <MemoHook/> */}
     {/* <MemoCounter/> */}
     {/* <InstagromApp /> */}
-    <ClientInformation id={123}/>
+    <Suspense
+      fallback={
+        <div className="bg-gradient text-white text-2xl flex flex-col">
+          Cargando información del usuario...
+        </div>
+      }
+    >
+      <ClientInformation getUser={getUserAction(1000)}/>
+    </Suspense>
   </StrictMode>,
 );
